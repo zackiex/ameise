@@ -51,23 +51,31 @@ const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 const balls = [];
 const antsTakers = [];
-let sugarX = 0;
-let sugarY = 0;
-let numberOfAntsNeeded;
+let x = document.documentElement.clientWidth;
+let y = document.documentElement.clientHeight;
+let sugarX = Math.floor(Math.random() * x + 20);
+let sugarY = Math.floor(Math.random() * y + 20);
+let numberOfAntsNeeded = 5;
 let backSpeed = Math.random() * 3 + 1;
 let antsAroundSugar = 0;
 let found = false;
 let dist = 100;
-const hiveBall = new BallImpl(Math.random() * canvas.width, Math.random() * canvas.height, 50);
+const hiveBall = new BallImpl(Math.floor(Math.random() * x + 20), Math.floor(Math.random() * y + 20), 50);
 hiveBall.speed = 0;
 balls.push(hiveBall);
+while (Math.abs(hiveBall.x - sugarX) < 200 || Math.abs(hiveBall.y - sugarY) < 200) {
+    sugarX = Math.floor(Math.random() * x + 20);
+    sugarY = Math.floor(Math.random() * y + 20);
+}
 const sugarBall = new BallImpl(sugarX, sugarY, 30);
 sugarBall.speed = 0;
 balls.push(sugarBall);
 function loop() {
     window.requestAnimationFrame(loop);
-    let height = canvas.height;
-    let width = canvas.width;
+    let height = document.documentElement.clientHeight;
+    let width = document.documentElement.clientWidth;
+    context.canvas.height = height;
+    context.canvas.width = width;
     antsAroundSugar = 0;
     for (let index = 0; index < balls.length; index++) {
         let ball = balls[index];
@@ -100,33 +108,13 @@ function loop() {
     context.fillText(amount.toString(), sugarBall.x - 10, sugarBall.y + 5);
 }
 document.getElementById("canvas").style.display = "none";
-function updateNumberOfAnts() {
-    const numAntsInput = document.getElementById("numAnts");
-    numberOfAntsNeeded = parseInt(numAntsInput.value);
-    numberOfAntsNeeded = Math.max(4, numberOfAntsNeeded);
-}
 function start() {
-    updateNumberOfAnts(); // Call the function to update the number of ants
     document.getElementById("canvas").style.display = "block";
-    const fieldSizeInput = document.getElementById("fieldSize");
-    const numAntsInput = document.getElementById("numAnts");
-    const fieldSize = parseInt(fieldSizeInput.value);
-    const numberOfAnts = parseInt(numAntsInput.value);
-    antsTakers.length = 0;
-    balls.length = 0;
-    sugarX = Math.floor(Math.random() * fieldSize + 20);
-    sugarY = Math.floor(Math.random() * fieldSize + 20);
-    found = false;
-    dist = 100;
-    hiveBall.x = Math.random() * fieldSize;
-    hiveBall.y = Math.random() * fieldSize;
-    while (Math.abs(hiveBall.x - sugarX) < 200 || Math.abs(hiveBall.y - sugarY) < 200) {
-        sugarX = Math.floor(Math.random() * fieldSize + 20);
-        sugarY = Math.floor(Math.random() * fieldSize + 20);
+    const numberOfAnts = 10;
+    numberOfAntsNeeded = Math.floor(Math.random() * numberOfAnts - 1) + 1;
+    while (numberOfAntsNeeded === 0) {
+        numberOfAntsNeeded = Math.floor(Math.random() * numberOfAnts - 1) + 1;
     }
-    sugarBall.x = sugarX;
-    sugarBall.y = sugarY;
-    numberOfAntsNeeded = Math.max(4, Math.min(numberOfAnts, numberOfAnts - 1));
     for (let index = 0; index < numberOfAnts; index++) {
         balls.push(new BallImpl(hiveBall.x, hiveBall.y, 10));
     }
