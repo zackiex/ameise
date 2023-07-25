@@ -127,6 +127,9 @@ function loop() {
             sugarBall.speed = backSpeed;
         }
     }
+    if (sugarBall.x - hiveBall.x < 5 && sugarBall.y - hiveBall.y < 5) {
+        refresh();
+    }
     // Display the number of remaining ants needed on the sugar ball.
     context.fillStyle = "black";
     context.font = "30px Arial";
