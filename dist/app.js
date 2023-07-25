@@ -113,7 +113,7 @@ function loop() {
             // Increment the counter of ants around the suga
             if (ball !== sugarBall && ball !== hiveBall) {
                 antsAroundSugar++;
-                dist = 300;
+                dist = dist * (antsAroundSugar + 1);
                 if (antsTakers.length !== numberOfAntsNeeded) {
                     if (!antsTakers.includes(ball))
                         antsTakers.push(ball);
