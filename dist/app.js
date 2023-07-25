@@ -136,10 +136,17 @@ function loop() {
     context.fillText(amount.toString(), sugarBall.x - 10, sugarBall.y + 5);
 }
 document.getElementById("canvas").style.display = "none";
+const refresh = () => {
+    location.reload();
+    let refreshButton = document.getElementById("refresh");
+    refreshButton.disabled = true;
+};
 function start() {
     document.getElementById("canvas").style.display = "block";
-    let button = document.getElementById("start");
-    button.disabled = true;
+    let startButton = document.getElementById("start");
+    startButton.disabled = true;
+    let refreshButton = document.getElementById("refresh");
+    refreshButton.disabled = false;
     // Randomly determine the number of ants needed between 1 and numberOfAnts.
     const numAntsInput = document.getElementById("numAnts");
     const numberOfAnts = parseInt(numAntsInput.value);
