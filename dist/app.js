@@ -138,6 +138,8 @@ function loop() {
 document.getElementById("canvas").style.display = "none";
 function start() {
     document.getElementById("canvas").style.display = "block";
+    let button = document.getElementById("start");
+    button.disabled = true;
     // Randomly determine the number of ants needed between 1 and numberOfAnts.
     const numAntsInput = document.getElementById("numAnts");
     const numberOfAnts = parseInt(numAntsInput.value);
